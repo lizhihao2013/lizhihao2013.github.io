@@ -305,22 +305,12 @@
 
       
         
-          
-            <p>&emsp;&emsp;统计分析分为统计描述和统计推断两个部分，统计描述是通过绘制统计图、计算统计量等方法描述数据的分布特征，是数据分析的基本步骤。</p>
-<h2 id="常用统计量"><a href="#常用统计量" class="headerlink" title="常用统计量"></a>常用统计量</h2><h3 id="均值-Mean"><a href="#均值-Mean" class="headerlink" title="均值(Mean)"></a>均值(Mean)</h3><p>&emsp;&emsp;一阶原点矩又称均数是一组数据的平均值。用它来描述正态分布数据的集中趋势。</p>
-<h3 id="标准差-Standard-Deviation"><a href="#标准差-Standard-Deviation" class="headerlink" title="标准差(Standard Deviation)"></a>标准差(Standard Deviation)</h3><p>&emsp;&emsp;标准差是方差的算术平方根，是一组数值自均数分散开来的程度的一种测量观念。</p>
-<p>&emsp;&emsp;例 已知50名患者的收缩压（mmHg）分别为： 147 163 159 124 120 94 135 185 109 143 116 129 157 146 149 127 124 160 101 129 130 154 151 119 128 147 127 172 145 159 141 131 117 139 142 152 147 157 134 146 144 119 160 136 122 172 170 109 151 144求血压的集中趋势和离散趋势及集中趋势的95%可信区间。</p>
-<p>&emsp;&emsp;先判断数据是否为正态分布，然后根据结果选择描述集中趋势的统计量。</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">bp =  c(<span class="number">147</span>,<span class="number">163</span>,<span class="number">159</span>,<span class="number">124</span>,<span class="number">120</span>,<span class="number">94</span>,<span class="number">135</span>,</div><div class="line">       <span class="number">185</span>,<span class="number">109</span>,<span class="number">143</span>,<span class="number">116</span>,<span class="number">129</span>,<span class="number">157</span>,<span class="number">146</span>,<span class="number">149</span>,</div><div class="line">       <span class="number">127</span>,<span class="number">124</span>,<span class="number">160</span>,<span class="number">101</span>,<span class="number">129</span>,<span class="number">130</span>,<span class="number">154</span>,<span class="number">151</span>,</div><div class="line">       <span class="number">119</span>,<span class="number">128</span>,<span class="number">147</span>,<span class="number">127</span>,<span class="number">122</span>,<span class="number">145</span>,<span class="number">159</span>,<span class="number">141</span>,</div><div class="line">       <span class="number">131</span>,<span class="number">117</span>,<span class="number">139</span>,<span class="number">142</span>,<span class="number">152</span>,<span class="number">147</span>,<span class="number">157</span>,<span class="number">134</span>,</div><div class="line">       <span class="number">146</span>,<span class="number">144</span>,<span class="number">119</span>,<span class="number">160</span>,<span class="number">136</span> ,<span class="number">122</span>,<span class="number">172</span>,<span class="number">170</span>,<span class="number">109</span>,<span class="number">151</span>,<span class="number">144</span>)</div><div class="line"></div><div class="line">qqnorm(bp)</div><div class="line"></div><div class="line">qqline(bp)</div></pre></td></tr></table></figure>
-<h3 id="核密度及频数直方图"><a href="#核密度及频数直方图" class="headerlink" title="核密度及频数直方图"></a>核密度及频数直方图</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">plot(density(bp)) 核密度</div><div class="line">hist(bp,freq = <span class="literal">F</span>) <span class="comment">#freq=T,则绘制频数</span></div></pre></td></tr></table></figure>
-<h3 id="正态性检验"><a href="#正态性检验" class="headerlink" title="正态性检验"></a>正态性检验</h3><h4 id="S-W检验"><a href="#S-W检验" class="headerlink" title="S-W检验"></a>S-W检验</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sw = shapiro.test(sbp)</div><div class="line">sw</div></pre></td></tr></table></figure>
-<h4 id="ks检验"><a href="#ks检验" class="headerlink" title="ks检验"></a>ks检验</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ks.test(bp,&quot;pnorm&quot;,mean(bp),sd(bp))</div></pre></td></tr></table></figure>
-<h3 id="均数"><a href="#均数" class="headerlink" title="均数"></a>均数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mean(bp)</div></pre></td></tr></table></figure>
-<h3 id="标准差"><a href="#标准差" class="headerlink" title="标准差"></a>标准差</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sd(bp)</div></pre></td></tr></table></figure>
-<h3 id="数据基本描述"><a href="#数据基本描述" class="headerlink" title="数据基本描述"></a>数据基本描述</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">epicacl::favstats(bp)</div></pre></td></tr></table></figure>
-<h3 id="t检验"><a href="#t检验" class="headerlink" title="t检验"></a>t检验</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">t.test(bp)</div></pre></td></tr></table></figure>
-
-          
+          <p>&emsp;&emsp;统计分析分为统计描述和统计推断两个部分，统计描述是通过绘制统计图、计算统计量等方法描述数据的分布特征，是数据分析的基本步骤。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/09/04/描述性统计/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -575,113 +565,6 @@
             
               
                 
-                <a class="post-title-link" href="/2016/08/27/python/" itemprop="url">
-                  python
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-27T09:27:49+08:00" content="2016-08-27">
-              2016-08-27
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/27/python/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/27/python/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.Series([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</div></pre></td></tr></table></figure>
-<pre><code>0    1
-1    2
-2    3
-3    4
-dtype: int64
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2016/08/26/R语言介绍/" itemprop="url">
                   R语言介绍
                 </a>
@@ -764,115 +647,6 @@ dtype: int64
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/25/hello-world/" itemprop="url">
-                  第一个博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-25T13:38:56+08:00" content="2016-08-25">
-              2016-08-25
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/25/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/25/hello-world/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -914,7 +688,7 @@ dtype: int64
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
