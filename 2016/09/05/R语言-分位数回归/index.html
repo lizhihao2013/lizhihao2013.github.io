@@ -1,0 +1,686 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|sans-serif:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="线性回归条件 &amp;emsp;&amp;emsp;我们平时常用线性回归，基本要求简写为”LINE”, 对变量的要求:
+
+“L”: 是线性的 (计量资料)
+“I”: 变量间相互独立 (不要有多重共线性)
+“N”: 要正态分布
+“E”: 误差独立分布">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R语言-分位数回归">
+<meta property="og:url" content="http://yoursite.com/2016/09/05/R语言-分位数回归/index.html">
+<meta property="og:site_name" content="博客">
+<meta property="og:description" content="线性回归条件 &amp;emsp;&amp;emsp;我们平时常用线性回归，基本要求简写为”LINE”, 对变量的要求:
+
+“L”: 是线性的 (计量资料)
+“I”: 变量间相互独立 (不要有多重共线性)
+“N”: 要正态分布
+“E”: 误差独立分布">
+<meta property="og:image" content="http://yoursite.com/分位回归_files/figure-html/unnamed-chunk-2-1.png">
+<meta property="og:image" content="http://yoursite.com/分位回归_files/figure-html/unnamed-chunk-3-1.png">
+<meta property="og:image" content="http://yoursite.com/分位回归_files/figure-html/unnamed-chunk-4-1.png">
+<meta property="og:updated_time" content="2016-09-05T02:44:44.530Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="R语言-分位数回归">
+<meta name="twitter:description" content="线性回归条件 &amp;emsp;&amp;emsp;我们平时常用线性回归，基本要求简写为”LINE”, 对变量的要求:
+
+“L”: 是线性的 (计量资料)
+“I”: 变量间相互独立 (不要有多重共线性)
+“N”: 要正态分布
+“E”: 误差独立分布">
+<meta name="twitter:image" content="http://yoursite.com/分位回归_files/figure-html/unnamed-chunk-2-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 123,
+      author: 'Zhihao'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/05/R语言-分位数回归/"/>
+
+  <title> R语言-分位数回归 | 博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/首页" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/分类" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/关于" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                R语言-分位数回归
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-05T10:14:49+08:00" content="2016-09-05">
+              2016-09-05
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/05/R语言-分位数回归/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/05/R语言-分位数回归/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="线性回归条件"><a href="#线性回归条件" class="headerlink" title="线性回归条件"></a>线性回归条件</h2><p> &emsp;&emsp;我们平时常用线性回归，基本要求简写为”LINE”, 对变量的要求:</p>
+<ol>
+<li>“L”: 是线性的 (计量资料)</li>
+<li>“I”: 变量间相互独立 (不要有多重共线性)</li>
+<li>“N”: 要正态分布</li>
+<li><p>“E”: 误差独立分布</p>
+<a id="more"></a>
+<p>&emsp;&emsp;  然而，现实资料中”L”和”E”条件是滿足的, 但”I”和”N”未必能满足, 为此，我们时常选择下面方法解决问题：</p>
+</li>
+</ol>
+<ul>
+<li>“I”—岭回归, 主成分分析, 或删去多重线性的变量，取相关性最大变量;</li>
+<li><p>“N”—百分位数回归…</p>
+<p> &emsp;&emsp; 下面主要介绍百分位数回归，其实质是将变量分段，取任一分位数事，变量的回归系数。<br>优势在于：1.一定程度全面展示所有资料的信息，但更侧重于对不同分位数的人群的异质性分析<br>其能在一定程度上全面展示所有資料的資訊，但更側重於對特徵分佈不同位置人群的異質性分析。尤其适用于不均匀分布，且分位数回归分析较传统线性回归模型的系数估计更稳健。</p>
+</li>
+</ul>
+<h2 id="演示R语言的操作"><a href="#演示R语言的操作" class="headerlink" title="演示R语言的操作"></a>演示R语言的操作</h2><p> 在此以quantreg包操作为例。以及使用quantreg包內自带数据engel示例…</p>
+<h3 id="程序包及数据准备"><a href="#程序包及数据准备" class="headerlink" title="程序包及数据准备"></a>程序包及数据准备</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#install.packages(“quantreg”) #安裝及使用quantreg包 </span></div><div class="line"><span class="keyword">library</span>(quantreg)   <span class="comment">#调取quantreg包</span></div><div class="line">data(<span class="string">"engel"</span>)  <span class="comment">#使用自帶的数据engel</span></div></pre></td></tr></table></figure>
+<h3 id="正态性检验"><a href="#正态性检验" class="headerlink" title="正态性检验"></a>正态性检验</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">foodnor = shapiro.test(engel$foodexp)  <span class="comment">#正态性检验</span></div><div class="line">foodhist = hist(engel$foodexp)  <span class="comment">#作個频数直条图</span></div></pre></td></tr></table></figure>
+<p><img src="分位回归_files/figure-html/unnamed-chunk-2-1.png" alt=""><!-- --></p>
+<h3 id="分位数回归实践"><a href="#分位数回归实践" class="headerlink" title="分位数回归实践"></a>分位数回归实践</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">fit = rq(foodexp~income,data=engel,tau=c(<span class="number">0.25</span>,<span class="number">0.5</span>,<span class="number">0.75</span>))  <span class="comment">#分数数回归: 命令rq, 公式foodexp~income </span></div><div class="line">summary(fit)  <span class="comment">#汇总结果</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">## </div><div class="line">## Call: rq(formula = foodexp ~ income, tau = c(0.25, 0.5, 0.75), data = engel)</div><div class="line">## </div><div class="line">## tau: [1] 0.25</div><div class="line">## </div><div class="line">## Coefficients:</div><div class="line">##             coefficients lower bd  upper bd </div><div class="line">## (Intercept)  95.48354     73.78608 120.09847</div><div class="line">## income        0.47410      0.42033   0.49433</div><div class="line">## </div><div class="line">## Call: rq(formula = foodexp ~ income, tau = c(0.25, 0.5, 0.75), data = engel)</div><div class="line">## </div><div class="line">## tau: [1] 0.5</div><div class="line">## </div><div class="line">## Coefficients:</div><div class="line">##             coefficients lower bd  upper bd </div><div class="line">## (Intercept)  81.48225     53.25915 114.01156</div><div class="line">## income        0.56018      0.48702   0.60199</div><div class="line">## </div><div class="line">## Call: rq(formula = foodexp ~ income, tau = c(0.25, 0.5, 0.75), data = engel)</div><div class="line">## </div><div class="line">## tau: [1] 0.75</div><div class="line">## </div><div class="line">## Coefficients:</div><div class="line">##             coefficients lower bd  upper bd </div><div class="line">## (Intercept)  62.39659     32.74488 107.31362</div><div class="line">## income        0.64401      0.58016   0.69041</div></pre></td></tr></table></figure>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plot(summary(fit))  <span class="comment">#多结果绘图</span></div></pre></td></tr></table></figure>
+<p><img src="分位回归_files/figure-html/unnamed-chunk-3-1.png" alt=""><!-- --></p>
+<h3 id="模型验证"><a href="#模型验证" class="headerlink" title="模型验证"></a>模型验证</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">plot(engel$income,engel$foodexp,cex=<span class="number">0.25</span>,</div><div class="line">     type=<span class="string">"n"</span>, xlab=<span class="string">"家庭收入"</span>, ylab=<span class="string">"食物支出"</span>)  </div><div class="line"></div><div class="line"></div><div class="line">points(engel$income,engel$foodexp,cex=<span class="number">0.5</span>,col=<span class="string">"blue"</span>)  <span class="comment"># 添加點，點的大小為0.5</span></div><div class="line">abline( rq(foodexp ~ income, data =engel,tau=<span class="number">0.5</span>), col=<span class="string">"blue"</span> )  <span class="comment"># 中位回归结果 蓝色</span></div><div class="line">abline( lm(foodexp ~ income,data =engel), lty = <span class="number">2</span>, col=<span class="string">"red"</span> )  <span class="comment"># 最小二乘法 红色</span></div><div class="line">taus&lt;-c(<span class="number">0.25</span>, <span class="number">0.5</span>, <span class="number">0.75</span>)</div><div class="line"><span class="keyword">for</span>(i <span class="keyword">in</span> <span class="number">1</span>:length(taus))&#123;  <span class="comment"># 不同分为的数据，顏色为灰色</span></div><div class="line">  abline( rq(foodexp ~ income,data =engel, tau=taus[i]), col=<span class="string">"gray"</span> )</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="分位回归_files/figure-html/unnamed-chunk-4-1.png" alt=""><!-- --></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/04/描述性统计/" rel="next" title="描述性统计">
+                <i class="fa fa-chevron-left"></i> 描述性统计
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/05/分位回归/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/05/R语言-分位数回归/"
+           data-title="R语言-分位数回归" data-url="http://yoursite.com/2016/09/05/R语言-分位数回归/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="志浩" />
+          <p class="site-author-name" itemprop="name">志浩</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/lizhihao2013" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性回归条件"><span class="nav-number">1.</span> <span class="nav-text">线性回归条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#演示R语言的操作"><span class="nav-number">2.</span> <span class="nav-text">演示R语言的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序包及数据准备"><span class="nav-number">2.1.</span> <span class="nav-text">程序包及数据准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正态性检验"><span class="nav-number">2.2.</span> <span class="nav-text">正态性检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分位数回归实践"><span class="nav-number">2.3.</span> <span class="nav-text">分位数回归实践</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型验证"><span class="nav-number">2.4.</span> <span class="nav-text">模型验证</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">志浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lizhihao2013"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>
