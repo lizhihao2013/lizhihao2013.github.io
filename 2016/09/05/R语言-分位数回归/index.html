@@ -120,10 +120,10 @@
 “I”: 变量间相互独立 (不要有多重共线性)
 “N”: 要正态分布
 “E”: 误差独立分布">
-<meta property="og:image" content="http://yoursite.com/分位回归_files/figure-html/unnamed-chunk-2-1.png">
-<meta property="og:image" content="http://yoursite.com/分位回归_files/figure-html/unnamed-chunk-3-1.png">
-<meta property="og:image" content="http://yoursite.com/分位回归_files/figure-html/unnamed-chunk-4-1.png">
-<meta property="og:updated_time" content="2016-09-05T02:44:44.530Z">
+<meta property="og:image" content="http://yoursite.com/C:/Users/Administrator/blog/source/_posts/分位回归_files/figure-html/unnamed-chunk-2-1.png">
+<meta property="og:image" content="http://yoursite.com/C:/Users/Administrator/blog/source/_posts/分位回归_files/figure-html/unnamed-chunk-3-1.png">
+<meta property="og:image" content="http://yoursite.com/C:/Users/Administrator/blog/source/_posts/分位回归_files/figure-html/unnamed-chunk-4-1.png">
+<meta property="og:updated_time" content="2016-09-05T02:48:12.403Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="R语言-分位数回归">
 <meta name="twitter:description" content="线性回归条件 &amp;emsp;&amp;emsp;我们平时常用线性回归，基本要求简写为”LINE”, 对变量的要求:
@@ -132,7 +132,7 @@
 “I”: 变量间相互独立 (不要有多重共线性)
 “N”: 要正态分布
 “E”: 误差独立分布">
-<meta name="twitter:image" content="http://yoursite.com/分位回归_files/figure-html/unnamed-chunk-2-1.png">
+<meta name="twitter:image" content="http://yoursite.com/C:/Users/Administrator/blog/source/_posts/分位回归_files/figure-html/unnamed-chunk-2-1.png">
 
 
 
@@ -341,13 +341,13 @@
 <h2 id="演示R语言的操作"><a href="#演示R语言的操作" class="headerlink" title="演示R语言的操作"></a>演示R语言的操作</h2><p> 在此以quantreg包操作为例。以及使用quantreg包內自带数据engel示例…</p>
 <h3 id="程序包及数据准备"><a href="#程序包及数据准备" class="headerlink" title="程序包及数据准备"></a>程序包及数据准备</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#install.packages(“quantreg”) #安裝及使用quantreg包 </span></div><div class="line"><span class="keyword">library</span>(quantreg)   <span class="comment">#调取quantreg包</span></div><div class="line">data(<span class="string">"engel"</span>)  <span class="comment">#使用自帶的数据engel</span></div></pre></td></tr></table></figure>
 <h3 id="正态性检验"><a href="#正态性检验" class="headerlink" title="正态性检验"></a>正态性检验</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">foodnor = shapiro.test(engel$foodexp)  <span class="comment">#正态性检验</span></div><div class="line">foodhist = hist(engel$foodexp)  <span class="comment">#作個频数直条图</span></div></pre></td></tr></table></figure>
-<p><img src="分位回归_files/figure-html/unnamed-chunk-2-1.png" alt=""><!-- --></p>
+<p><img src="C:/Users/Administrator/blog/source/_posts/分位回归_files/figure-html/unnamed-chunk-2-1.png" alt=""><!-- --></p>
 <h3 id="分位数回归实践"><a href="#分位数回归实践" class="headerlink" title="分位数回归实践"></a>分位数回归实践</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">fit = rq(foodexp~income,data=engel,tau=c(<span class="number">0.25</span>,<span class="number">0.5</span>,<span class="number">0.75</span>))  <span class="comment">#分数数回归: 命令rq, 公式foodexp~income </span></div><div class="line">summary(fit)  <span class="comment">#汇总结果</span></div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">## </div><div class="line">## Call: rq(formula = foodexp ~ income, tau = c(0.25, 0.5, 0.75), data = engel)</div><div class="line">## </div><div class="line">## tau: [1] 0.25</div><div class="line">## </div><div class="line">## Coefficients:</div><div class="line">##             coefficients lower bd  upper bd </div><div class="line">## (Intercept)  95.48354     73.78608 120.09847</div><div class="line">## income        0.47410      0.42033   0.49433</div><div class="line">## </div><div class="line">## Call: rq(formula = foodexp ~ income, tau = c(0.25, 0.5, 0.75), data = engel)</div><div class="line">## </div><div class="line">## tau: [1] 0.5</div><div class="line">## </div><div class="line">## Coefficients:</div><div class="line">##             coefficients lower bd  upper bd </div><div class="line">## (Intercept)  81.48225     53.25915 114.01156</div><div class="line">## income        0.56018      0.48702   0.60199</div><div class="line">## </div><div class="line">## Call: rq(formula = foodexp ~ income, tau = c(0.25, 0.5, 0.75), data = engel)</div><div class="line">## </div><div class="line">## tau: [1] 0.75</div><div class="line">## </div><div class="line">## Coefficients:</div><div class="line">##             coefficients lower bd  upper bd </div><div class="line">## (Intercept)  62.39659     32.74488 107.31362</div><div class="line">## income        0.64401      0.58016   0.69041</div></pre></td></tr></table></figure>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plot(summary(fit))  <span class="comment">#多结果绘图</span></div></pre></td></tr></table></figure>
-<p><img src="分位回归_files/figure-html/unnamed-chunk-3-1.png" alt=""><!-- --></p>
+<p><img src="C:/Users/Administrator/blog/source/_posts/分位回归_files/figure-html/unnamed-chunk-3-1.png" alt=""><!-- --></p>
 <h3 id="模型验证"><a href="#模型验证" class="headerlink" title="模型验证"></a>模型验证</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">plot(engel$income,engel$foodexp,cex=<span class="number">0.25</span>,</div><div class="line">     type=<span class="string">"n"</span>, xlab=<span class="string">"家庭收入"</span>, ylab=<span class="string">"食物支出"</span>)  </div><div class="line"></div><div class="line"></div><div class="line">points(engel$income,engel$foodexp,cex=<span class="number">0.5</span>,col=<span class="string">"blue"</span>)  <span class="comment"># 添加點，點的大小為0.5</span></div><div class="line">abline( rq(foodexp ~ income, data =engel,tau=<span class="number">0.5</span>), col=<span class="string">"blue"</span> )  <span class="comment"># 中位回归结果 蓝色</span></div><div class="line">abline( lm(foodexp ~ income,data =engel), lty = <span class="number">2</span>, col=<span class="string">"red"</span> )  <span class="comment"># 最小二乘法 红色</span></div><div class="line">taus&lt;-c(<span class="number">0.25</span>, <span class="number">0.5</span>, <span class="number">0.75</span>)</div><div class="line"><span class="keyword">for</span>(i <span class="keyword">in</span> <span class="number">1</span>:length(taus))&#123;  <span class="comment"># 不同分为的数据，顏色为灰色</span></div><div class="line">  abline( rq(foodexp ~ income,data =engel, tau=taus[i]), col=<span class="string">"gray"</span> )</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="分位回归_files/figure-html/unnamed-chunk-4-1.png" alt=""><!-- --></p>
+<p><img src="C:/Users/Administrator/blog/source/_posts/分位回归_files/figure-html/unnamed-chunk-4-1.png" alt=""><!-- --></p>
 
       
     </div>
@@ -478,7 +478,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
