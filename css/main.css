@@ -203,7 +203,7 @@ body {
 }
 @media (min-width: 1600px) {
   body {
-    font-size: 16px;
+    font-size: 20px;
   }
 }
 h1,
@@ -1548,7 +1548,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #829ecb;
+  background: #58ffff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2350,12 +2350,12 @@ hr {
 }
 @media (max-width: 767px) {
   .post-more-link a {
-    font-size: 12px;
+    font-size: 16px;
   }
 }
 @media (min-width: 1600px) {
   .post-more-link a {
-    font-size: 16px;
+    font-size: 20px;
   }
 }
 .post-more-link a:hover {

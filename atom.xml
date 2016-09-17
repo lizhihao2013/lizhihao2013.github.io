@@ -705,6 +705,55 @@ $(document).ready(function () {
   </entry>
   
   <entry>
+    <title>R语言-分位数回归</title>
+    <link href="http://yoursite.com/2016/09/05/R%E8%AF%AD%E8%A8%80-%E5%88%86%E4%BD%8D%E6%95%B0%E5%9B%9E%E5%BD%92/"/>
+    <id>http://yoursite.com/2016/09/05/R语言-分位数回归/</id>
+    <published>2016-09-05T02:14:49.000Z</published>
+    <updated>2016-09-05T12:06:17.654Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="线性回归条件"><a href="#线性回归条件" class="headerlink" title="线性回归条件"></a>线性回归条件</h2><p> &emsp;&emsp;我们平时常用线性回归，基本要求简写为”LINE”, 对变量的要求:</p>
+<ol>
+<li>“L”: 是线性的 (计量资料)</li>
+<li>“I”: 变量间相互独立 (不要有多重共线性)</li>
+<li>“N”: 要正态分布</li>
+<li><p>“E”: 误差独立分布</p>
+<a id="more"></a>
+<p>&emsp;&emsp;  然而，现实资料中”L”和”E”条件是滿足的, 但”I”和”N”未必能满足, 为此，我们时常选择下面方法解决问题：</p>
+</li>
+</ol>
+<ul>
+<li>“I”—岭回归, 主成分分析, 或删去多重线性的变量，取相关性最大变量;</li>
+<li><p>“N”—百分位数回归…</p>
+<p> &emsp;&emsp; 下面主要介绍百分位数回归，其实质是将变量分段，取任一分位数事，变量的回归系数。<br>优势在于：1.一定程度全面展示所有资料的信息，但更侧重于对不同分位数的人群的异质性分析<br>其能在一定程度上全面展示所有資料的資訊，但更側重於對特徵分佈不同位置人群的異質性分析。尤其适用于不均匀分布，且分位数回归分析较传统线性回归模型的系数估计更稳健。</p>
+</li>
+</ul>
+<h2 id="演示R语言的操作"><a href="#演示R语言的操作" class="headerlink" title="演示R语言的操作"></a>演示R语言的操作</h2><p> 在此以quantreg包操作为例。以及使用quantreg包內自带数据engel示例…</p>
+<h3 id="程序包及数据准备"><a href="#程序包及数据准备" class="headerlink" title="程序包及数据准备"></a>程序包及数据准备</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#install.packages(“quantreg”) #安裝及使用quantreg包 </span></div><div class="line"><span class="keyword">library</span>(quantreg)   <span class="comment">#调取quantreg包</span></div><div class="line">data(<span class="string">"engel"</span>)  <span class="comment">#使用自帶的数据engel</span></div></pre></td></tr></table></figure>
+<h3 id="正态性检验"><a href="#正态性检验" class="headerlink" title="正态性检验"></a>正态性检验</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">foodnor = shapiro.test(engel$foodexp)  <span class="comment">#正态性检验</span></div><div class="line">foodhist = hist(engel$foodexp)  <span class="comment">#作個频数直条图</span></div></pre></td></tr></table></figure>
+<p><img src="C:/Users/Administrator/blog/source/_posts/分位回归_files/figure-html/unnamed-chunk-2-1.png" alt=""><!-- --></p>
+<h3 id="分位数回归实践"><a href="#分位数回归实践" class="headerlink" title="分位数回归实践"></a>分位数回归实践</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">fit = rq(foodexp~income,data=engel,tau=c(<span class="number">0.25</span>,<span class="number">0.5</span>,<span class="number">0.75</span>))  <span class="comment">#分数数回归: 命令rq, 公式foodexp~income </span></div><div class="line">summary(fit)  <span class="comment">#汇总结果</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">## </div><div class="line">## Call: rq(formula = foodexp ~ income, tau = c(0.25, 0.5, 0.75), data = engel)</div><div class="line">## </div><div class="line">## tau: [1] 0.25</div><div class="line">## </div><div class="line">## Coefficients:</div><div class="line">##             coefficients lower bd  upper bd </div><div class="line">## (Intercept)  95.48354     73.78608 120.09847</div><div class="line">## income        0.47410      0.42033   0.49433</div><div class="line">## </div><div class="line">## Call: rq(formula = foodexp ~ income, tau = c(0.25, 0.5, 0.75), data = engel)</div><div class="line">## </div><div class="line">## tau: [1] 0.5</div><div class="line">## </div><div class="line">## Coefficients:</div><div class="line">##             coefficients lower bd  upper bd </div><div class="line">## (Intercept)  81.48225     53.25915 114.01156</div><div class="line">## income        0.56018      0.48702   0.60199</div><div class="line">## </div><div class="line">## Call: rq(formula = foodexp ~ income, tau = c(0.25, 0.5, 0.75), data = engel)</div><div class="line">## </div><div class="line">## tau: [1] 0.75</div><div class="line">## </div><div class="line">## Coefficients:</div><div class="line">##             coefficients lower bd  upper bd </div><div class="line">## (Intercept)  62.39659     32.74488 107.31362</div><div class="line">## income        0.64401      0.58016   0.69041</div></pre></td></tr></table></figure>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plot(summary(fit))  <span class="comment">#多结果绘图</span></div></pre></td></tr></table></figure>
+<p><img src="C:/Users/Administrator/blog/source/_posts/分位回归_files/figure-html/unnamed-chunk-3-1.png" alt=""><!-- --></p>
+<h3 id="模型验证"><a href="#模型验证" class="headerlink" title="模型验证"></a>模型验证</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">plot(engel$income,engel$foodexp,cex=<span class="number">0.25</span>,</div><div class="line">     type=<span class="string">"n"</span>, xlab=<span class="string">"家庭收入"</span>, ylab=<span class="string">"食物支出"</span>)  </div><div class="line"></div><div class="line"></div><div class="line">points(engel$income,engel$foodexp,cex=<span class="number">0.5</span>,col=<span class="string">"blue"</span>)  <span class="comment"># 添加點，點的大小為0.5</span></div><div class="line">abline( rq(foodexp ~ income, data =engel,tau=<span class="number">0.5</span>), col=<span class="string">"blue"</span> )  <span class="comment"># 中位回归结果 蓝色</span></div><div class="line">abline( lm(foodexp ~ income,data =engel), lty = <span class="number">2</span>, col=<span class="string">"red"</span> )  <span class="comment"># 最小二乘法 红色</span></div><div class="line">taus&lt;-c(<span class="number">0.25</span>, <span class="number">0.5</span>, <span class="number">0.75</span>)</div><div class="line"><span class="keyword">for</span>(i <span class="keyword">in</span> <span class="number">1</span>:length(taus))&#123;  <span class="comment"># 不同分为的数据，顏色为灰色</span></div><div class="line">  abline( rq(foodexp ~ income,data =engel, tau=taus[i]), col=<span class="string">"gray"</span> )</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="C:/Users/Administrator/blog/source/_posts/分位回归_files/figure-html/unnamed-chunk-4-1.png" alt=""><!-- --></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;线性回归条件&quot;&gt;&lt;a href=&quot;#线性回归条件&quot; class=&quot;headerlink&quot; title=&quot;线性回归条件&quot;&gt;&lt;/a&gt;线性回归条件&lt;/h2&gt;&lt;p&gt; &amp;emsp;&amp;emsp;我们平时常用线性回归，基本要求简写为”LINE”, 对变量的要求:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;“L”: 是线性的 (计量资料)&lt;/li&gt;
+&lt;li&gt;“I”: 变量间相互独立 (不要有多重共线性)&lt;/li&gt;
+&lt;li&gt;“N”: 要正态分布&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“E”: 误差独立分布&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>描述性统计</title>
     <link href="http://yoursite.com/2016/09/04/%E6%8F%8F%E8%BF%B0%E6%80%A7%E7%BB%9F%E8%AE%A1/"/>
     <id>http://yoursite.com/2016/09/04/描述性统计/</id>
