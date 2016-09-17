@@ -1,0 +1,752 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|sans-serif:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="绘图," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="各图形参数含义adj： 控制关于文字的对齐方式，0是左对齐，0.5是居中对齐，1是右对齐，值&amp;gt; 1时对齐位置在文本右边的地方，取负值时对齐位置在文本左边的地方；如果给出两个值（例如c(0, 0))，第二个只控制关于文字基线的垂直调整
+bg 指定背景色（例如bg=”red”, bg=”blue”; 用colors()可以显示657种可用的颜色名）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R图像参数详解">
+<meta property="og:url" content="http://yoursite.com/2016/09/02/R图像参数/index.html">
+<meta property="og:site_name" content="博客">
+<meta property="og:description" content="各图形参数含义adj： 控制关于文字的对齐方式，0是左对齐，0.5是居中对齐，1是右对齐，值&amp;gt; 1时对齐位置在文本右边的地方，取负值时对齐位置在文本左边的地方；如果给出两个值（例如c(0, 0))，第二个只控制关于文字基线的垂直调整
+bg 指定背景色（例如bg=”red”, bg=”blue”; 用colors()可以显示657种可用的颜色名）">
+<meta property="og:image" content="C:\\Users\\Administrator\\Desktop\\总体研究情况1 (2">
+<meta property="og:updated_time" content="2016-09-17T02:27:35.211Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="R图像参数详解">
+<meta name="twitter:description" content="各图形参数含义adj： 控制关于文字的对齐方式，0是左对齐，0.5是居中对齐，1是右对齐，值&amp;gt; 1时对齐位置在文本右边的地方，取负值时对齐位置在文本左边的地方；如果给出两个值（例如c(0, 0))，第二个只控制关于文字基线的垂直调整
+bg 指定背景色（例如bg=”red”, bg=”blue”; 用colors()可以显示657种可用的颜色名）">
+<meta name="twitter:image" content="C:\\Users\\Administrator\\Desktop\\总体研究情况1 (2">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 123,
+      author: 'Zhihao'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/02/R图像参数/"/>
+
+  <title> R图像参数详解 | 博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/分类" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/关于" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                R图像参数详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-02T23:46:44+08:00" content="2016-09-02">
+              2016-09-02
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/02/R图像参数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/09/02/R图像参数/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="各图形参数含义"><a href="#各图形参数含义" class="headerlink" title="各图形参数含义"></a>各图形参数含义</h1><p>adj： 控制关于文字的对齐方式，0是左对齐，0.5是居中对齐，1是右对齐，值&gt; 1时对齐位置在文本右边的地方，取负值时对齐位置在文本左边的地方；如果给出两个值（例如c(0, 0))，第二个只控制关于文字基线的垂直调整</p>
+<p>bg 指定背景色（例如bg=”red”, bg=”blue”; 用colors()可以显示657种可用的颜色名）</p>
+<a id="more"></a>
+<p>bty： 控制图形边框形状，可用的值为: “o”, “l”, “7”, “c”, “u” 和”]” （边框和字符的外表相像）；如果bty=”n”则不绘制边框</p>
+<p>cex： 控制缺省状态下符号和文字大小的值； 另外，cex.axis控制坐标轴刻度数字大小，cex.lab控制坐标轴标签文字大小，cex.main控制标题文字大小，cex.sub控制副标题文字大小</p>
+<p>col： 控制符号的颜色； 和cex类似， 还可用：col.axis, col.lab, col.main, col.sub</p>
+<p>font： 控制文字字体的整数（1: 正常，2: 斜体，3: 粗体，4: 粗斜体）；和cex类似，还可用: font.axis, font.lab, font.main, font.sub</p>
+<p>las： 控制坐标轴刻度数字标记方向的整数（0: 平行于轴，1: 横排，2: 垂直于轴，3:竖排）</p>
+<p>lty： 控制连线的线型， 可以是整数（1: 实线，2: 虚线，3: 点线，4: 点虚线，5: 长虚线，6: 双虚线），或者是不超过8个字符的字符串（字符为从”0”到”9”之间的数字）交替地指定线和空白的长度，单位为磅(points)或象素，例如lty=”44”和lty=2效果相同</p>
+<p>lwd： 控制连线宽度的数字</p>
+<p>mar： 控制图形边空的有4个值的向量c(bottom, left, top, right), 缺省值为c(5.1, 4.1, 4.1, 2.1)</p>
+<p>mfcol： c(nr,nc)的向量，分割绘图窗口为nr行nc列的矩阵布局，按列次序使用各子窗口</p>
+<p>mfrow： 同上，但是按行次序使用各子窗口</p>
+<p>pch：控制符号的类型，可以是1到25的整数，也可以是””里的单个字符</p>
+<p>ps： 控制文字大小的整数，单位为磅(points)</p>
+<p>pty： 指定绘图区域类型的字符，”s”: 正方形，”m”:最大利用</p>
+<p>tck： 指定轴上刻度长度的值，单位是百分比，以图形宽、高中最小一个作为基数；如果tck=1则绘制grid</p>
+<p>tcl： 同上，但以文本行高度为基数（缺省下tcl=-0.5）</p>
+<p>xaxt： 如果xaxt=”n”则设置x-轴但不显示（有助于和axis(side=1, …)联合使用）</p>
+<p>yaxt 如果yaxt=”n”则设置y-轴但不显示（有助于和axis(side=2, …)联合使用）</p>
+<h3 id="1-可以通过代码或者图形用户界面保存图形，绘图语句夹在开启目标图形设备语句和关闭图形设备的语句之间；"><a href="#1-可以通过代码或者图形用户界面保存图形，绘图语句夹在开启目标图形设备语句和关闭图形设备的语句之间；" class="headerlink" title="1.可以通过代码或者图形用户界面保存图形，绘图语句夹在开启目标图形设备语句和关闭图形设备的语句之间；"></a>1.可以通过代码或者图形用户界面保存图形，绘图语句夹在开启目标图形设备语句和关闭图形设备的语句之间；</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">pdf(&quot;filename.pdf&quot;)</div><div class="line">png(&quot;filename.png&quot;)</div><div class="line">jepg(&quot;filename.jpg&quot;)</div><div class="line">dev.off()</div></pre></td></tr></table></figure>
+<h3 id="2-图形参数："><a href="#2-图形参数：" class="headerlink" title="2.图形参数："></a>2.图形参数：</h3><pre><code>1、通过par()指定参数选项，这种方式设定的参数值除非被再次修改，否则会在绘画结束前一直有效，添加参数no.readonly=TRUE可以生成一个可以修改的当前图形列表参数；
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">opar &lt;- par(no.readonly=TRUE)</div><div class="line">par(lty=2,pch=17)</div><div class="line">plot(dose,drugA,type=&quot;b&quot;)</div><div class="line">par(opar)</div></pre></td></tr></table></figure>
+<p>　 2、第二种就是为绘图函数直接提供参数，这样仅对这幅图本身有效，并不是所有的绘图函数都允许指定全部的绘图参数，具体可以参考帮助命令；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plot(dose,drugA,type=&quot;b&quot;,lty=2,pch=17)  #还原了原始设置</div></pre></td></tr></table></figure>
+<p>　 3：具体一些参数：</p>
+<pre><code>  pch：指定绘制点时使用的符号；
+
+  cex：指定符号的大小，是一个数值，也可以控制文字大小；
+
+   lty：指定线条的类型；
+
+  lwd：指定线条宽度，默认值为1；
+
+xaxt：=&quot;n&quot;表示禁用X轴，会留下框架线，只是去除了刻度；
+
+   col：默认绘图颜色，有些函数例如lines、pie可以接受循环使用，比如设定c=(&quot;red&quot;,&quot;blue&quot;)，第一条red，第二条blue，第三条又是red；
+
+ font：整数，设置字体为粗体、常规、斜体；
+
+main：标题，通过main=title()调用，col.main设置标题颜色；
+
+ axis：创建自定义坐标轴，参数side为坐标轴的位置，1234代表上下左右；at为数值向量，标识绘制刻度线的位置；labels为一个字符向量，标识刻度线旁边的文字标签，如                果为NULL，则直接使用at中的值；pos为与另外一条坐标轴相交位置的值；lty线条类型；col颜色；las=0标签平行于坐标轴，=2垂直；tck刻度线的长度，负值在图形                外侧，正值在图形内侧，0表示禁用刻度，1表示绘制网格线；默认值-0.01；
+</code></pre><p>   legend：图例。第一个参数为图例的位置，有top、right、bottom、left、center、topleft等，如果使用这些关键字，同事可以使用inset=来指定图例向图形内侧移动大小；                  title图例标题的字符串；legend图例标签组成的字符串向量，使用c()来创建多个字符串，col=()来指定多个颜色；其余参数pch、lwd等；</p>
+<pre><code>  text：向绘图区域内部添加文本，第一个参数为一对坐标，标识放置位置；pos文本相对于位置参数的方位，1234标识上下左右，offect代表偏移量；side标识文本放置的                    边，1234表示上下左右；
+
+mtext：向图形的四个边界之一添加文本；
+</code></pre><h3 id="三、条形图"><a href="#三、条形图" class="headerlink" title="三、条形图"></a>三、条形图</h3><pre><code>barplot(height)，height是一个向量或者矩阵
+
+注意：如果要绘制的类别型变量是一个因子或者有序型因子，就可直接使用函数plot()快速创建一副垂直条形图，无需使用table函数将其表格化；
+
+堆砌条形图和分组条形图：如果height是一个矩阵而不是一个向量，参数beside=FALSE将会画出堆砌条形图，beside=TRUE则会画出分组条形图；
+
+noriz=TRUE时画出水平的条形图；
+</code></pre><h3 id="四、饼图"><a href="#四、饼图" class="headerlink" title="四、饼图"></a>四、饼图</h3><pre><code>pie(x，labels)，x是一个非负数值向量，标识每个扇形的面积；labels表示各扇形标签的字符型向量；
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">col=rainbow()  #生成彩虹色；</div><div class="line"></div><div class="line">library(plotrix)</div><div class="line">pie3D() #生成3D饼图；</div></pre></td></tr></table></figure>
+<h3 id="五、直方图"><a href="#五、直方图" class="headerlink" title="五、直方图"></a>五、直方图</h3><pre><code>hist(x)，x是由数据值组成的数值向量
+
+freq=FALSE参数表示根据概率密度而不是频数绘制；breaks参数用于控制组的数量；
+</code></pre><h3 id="六、箱线图"><a href="#六、箱线图" class="headerlink" title="六、箱线图"></a>六、箱线图</h3><pre><code>boxplot()，描述连续型变量的分布；
+
+boxplot(formula,data=dataframe)，formula是一个公式，比如y~A表示类别型变量A的每个值并列的生成数值型变量y的箱线图，y~A*B表示类别型变量A和B所有水平的       两两组合生成数值型变量y的箱线图；
+
+varwidth=TRUE使箱线图的宽度与其样本大小的平方根成正比；horizontal=TRUE参数可以反转坐标轴方向；notch=TRUE参数可以得到含凹槽的箱线图，若两个箱的凹槽       互不重叠，则表明它们的中位数有显著差异；
+</code></pre><h3 id="七、点图"><a href="#七、点图" class="headerlink" title="七、点图"></a>七、点图</h3><p>   dotchart(x,labels)，x是一个数值向量，labels则是由每个点的标签组成的向量；</p>
+<p><img src="C:\\Users\\Administrator\\Desktop\\总体研究情况1 (2" alt="alt text">.png)</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/绘图/" rel="tag">#绘图</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/31/泊松回归/" rel="next" title="泊松回归">
+                <i class="fa fa-chevron-left"></i> 泊松回归
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/04/描述性统计/" rel="prev" title="描述性统计">
+                描述性统计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          <div id="disqus_thread"></div>
+<script>
+
+/**
+ *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+ *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
+/*
+var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//https-lizhihao2013-github-io.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="志浩" />
+          <p class="site-author-name" itemprop="name">志浩</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/lizhihao2013" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#各图形参数含义"><span class="nav-number">1.</span> <span class="nav-text">各图形参数含义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-可以通过代码或者图形用户界面保存图形，绘图语句夹在开启目标图形设备语句和关闭图形设备的语句之间；"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.可以通过代码或者图形用户界面保存图形，绘图语句夹在开启目标图形设备语句和关闭图形设备的语句之间；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-图形参数："><span class="nav-number">1.0.2.</span> <span class="nav-text">2.图形参数：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、条形图"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、条形图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、饼图"><span class="nav-number">1.0.4.</span> <span class="nav-text">四、饼图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、直方图"><span class="nav-number">1.0.5.</span> <span class="nav-text">五、直方图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、箱线图"><span class="nav-number">1.0.6.</span> <span class="nav-text">六、箱线图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、点图"><span class="nav-number">1.0.7.</span> <span class="nav-text">七、点图</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">志浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共7.5k字</span>
+</div>
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'zhihao';
+      var disqus_identifier = '2016/09/02/R图像参数/';
+      var disqus_title = "R图像参数详解";
+      var disqus_url = 'http://yoursite.com/2016/09/02/R图像参数/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>
