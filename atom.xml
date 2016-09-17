@@ -101,7 +101,7 @@
     <link href="http://yoursite.com/2016/09/02/R%E5%9B%BE%E5%83%8F%E5%8F%82%E6%95%B0/"/>
     <id>http://yoursite.com/2016/09/02/R图像参数/</id>
     <published>2016-09-02T15:46:44.000Z</published>
-    <updated>2016-09-05T10:02:27.529Z</updated>
+    <updated>2016-09-17T01:52:30.218Z</updated>
     
     <content type="html"><![CDATA[<h1 id="各图形参数含义"><a href="#各图形参数含义" class="headerlink" title="各图形参数含义"></a>各图形参数含义</h1><p>adj 控制关于文字的对齐方式，0是左对齐，0.5是居中对齐，1是右对齐，值&gt; 1时对齐位置在文本右边的地方，取负值时对齐位置在文本左边的地方；如果给出两个值（例如c(0, 0))，第二个只控制关于文字基线的垂直调整</p>
 <p>bg 指定背景色（例如bg=”red”, bg=”blue”; 用colors()可以显示657种可用的颜色名）</p>
@@ -180,6 +180,8 @@ varwidth=TRUE使箱线图的宽度与其样本大小的平方根成正比；hori
     
     </summary>
     
+    
+      <category term="绘图" scheme="http://yoursite.com/tags/%E7%BB%98%E5%9B%BE/"/>
     
   </entry>
   
